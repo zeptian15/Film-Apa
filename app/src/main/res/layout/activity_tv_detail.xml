@@ -9,127 +9,111 @@
     <ImageView
         android:id="@+id/img_background"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:contentDescription="@string/background_image"
-        android:scaleType="centerCrop"
+        android:layout_marginBottom="431dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:background="#E91E63" />
+        tools:background="@color/colorPrimary"/>
 
     <ImageView
-        android:id="@+id/black_image_layer"
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:alpha="0.3"
-        android:background="#000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_poster"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        app:cardCornerRadius="10dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/transparent_gradient_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/img_background"
-        app:layout_constraintVertical_bias="0.251">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/img_poster"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/image_poster"
-            tools:background="#9C27B0" />
-
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/tv_title_show"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/psb"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:textColor="#000"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/cv_poster"
-        app:layout_constraintTop_toBottomOf="@+id/img_background"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="@string/title_card_tv" />
-
-    <TextView
-        android:id="@+id/tv_release_year_show"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/psr"
-        android:paddingLeft="10dp"
-        android:textColor="#000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/cv_poster"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_show"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="@string/release_year" />
-
-    <TextView
-        android:id="@+id/label_description_show"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:fontFamily="@font/psb"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="8dp"
-        android:text="@string/overview"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_poster"
-        app:layout_constraintVertical_bias="0.025" />
-
-    <ScrollView
-        android:id="@+id/scroll_view"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/img_poster"
+        android:layout_width="200dp"
         android:layout_height="250dp"
-        android:orientation="vertical"
+        android:contentDescription="@string/image_poster"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/img_background"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/img_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.145"
+        tools:background="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/tv_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:maxLines="2"
+        android:text="@string/title_tv_show"
+        android:textColor="@color/colorAccent"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_poster" />
+
+    <TextView
+        android:id="@+id/tv_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="136dp"
+        android:layout_marginLeft="136dp"
+        android:layout_marginTop="92dp"
+        android:drawableLeft="@drawable/ic_closed_caption_24dp"
+        android:drawablePadding="10dp"
+        android:text="en"
+        android:textAllCaps="true"
+        android:textColor="@color/colorSpecialFont"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/img_poster" />
+
+    <TextView
+        android:id="@+id/tv_vote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginRight="132dp"
+        android:drawableLeft="@drawable/ic_favorite_border_24dp"
+        android:drawablePadding="10dp"
+        android:text="6.7"
+        android:textColor="@color/colorSpecialFont"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_poster" />
+
+    <TextView
+        android:id="@+id/label_overview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:text="@string/overview"
+        android:textColor="@color/colorSpecialFont"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_poster" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="20dp"
+        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_description_show"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/label_overview"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/tv_description_show"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/psr"
-            android:textColor="#000"
-            android:textSize="18sp"
-            tools:text="@tools:sample/lorem" />
-
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

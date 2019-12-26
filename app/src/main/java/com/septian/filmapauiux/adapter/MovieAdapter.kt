@@ -10,13 +10,20 @@ import com.septian.filmapauiux.R
 import com.septian.filmapauiux.model.Movie
 import kotlinx.android.synthetic.main.item_movie.view.*
 
-class MovieAdapter(private val listMovie: ArrayList<Movie>) :
+class MovieAdapter :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     // Inisialisasi Item Click
     private var onItemClickCallback: OnItemClickCallback? = null
+    private val mData = ArrayList<Movie>()
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
+    }
+
+    fun setData(items: ArrayList<Movie>) {
+        mData.clear()
+        mData.addAll(items)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MovieViewHolder {
@@ -25,17 +32,21 @@ class MovieAdapter(private val listMovie: ArrayList<Movie>) :
         return MovieViewHolder(view)
     }
 
-    override fun getItemCount(): Int = listMovie.size
+    override fun getItemCount(): Int = mData.size
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(listMovie[position])
+        holder.bind(mData[position])
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(movie: Movie) {
             with(itemView) {
                 Glide.with(itemView.context)
-                    .load(movie.poster)
+                    .load("https://image.tmdb.org/t/p/w500" + movie.poster)
+                    .apply(RequestOptions().override(550, 550))
+                    .into(img_poster)
+                Glide.with(itemView.context)
+                    .load("https://image.tmdb.org/t/p/w500" + movie.background)
                     .apply(RequestOptions().override(550, 550))
                     .into(img_background)
                 tv_title_movie.text = movie.title

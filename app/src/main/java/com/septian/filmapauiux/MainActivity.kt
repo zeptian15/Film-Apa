@@ -5,41 +5,38 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.septian.filmapauiux.adapter.ViewPagerAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        // Inisialisasi View Pager
+        val viewPagerAdapter = ViewPagerAdapter(this, supportFragmentManager)
+        view_pager.adapter = viewPagerAdapter
+        tabs.setupWithViewPager(view_pager)
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_movies, R.id.navigation_tv_show
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        // Ganti Bahasa
+        btn_change_language.setOnClickListener(this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_change_settings) {
-            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(mIntent)
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.btn_change_language -> {
+                // Masuk halaman ganti bahasa
+                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(mIntent)
+            }
         }
-        return super.onOptionsItemSelected(item)
     }
 }

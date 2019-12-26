@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.septian.filmapauiux.model.Movie
 import com.septian.rickymaulana.filmapa.adapter.MovieAdapter
+import kotlinx.android.synthetic.main.fragment_movies.*
 
 /**
  * A simple [Fragment] subclass.
@@ -19,6 +22,9 @@ class MoviesFragment : Fragment() {
     // Inisialisasi Variabel
     private val list = ArrayList<Movie>()
     private lateinit var rvMovie: RecyclerView
+    private lateinit var adapter: MovieAdapter
+
+    private lateinit var dataViewModel: DataViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,44 +38,34 @@ class MoviesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         rvMovie = view.findViewById(R.id.rv_movie)
         rvMovie.setHasFixedSize(true)
-        list.addAll(getListMovies())
-        showRecyclerList()
 
-    }
-
-    // Method GetListMovies
-    private fun getListMovies(): ArrayList<Movie> {
-        val dataTitle = resources.getStringArray(R.array.movies_title)
-        val dataRelease = resources.getStringArray(R.array.movies_release_year)
-        val dataDescription = resources.getStringArray(R.array.movies_description)
-        val dataPoster = resources.obtainTypedArray(R.array.movies_poster)
-        val dataBackground = resources.obtainTypedArray(R.array.movies_background)
-
-        val listMovie = ArrayList<Movie>()
-        for (position in dataTitle.indices) {
-            val movie = Movie(
-                dataTitle[position],
-                dataRelease[position],
-                dataDescription[position],
-                dataPoster.getResourceId(position, -1),
-                dataBackground.getResourceId(position, -1)
-            )
-            listMovie.add(movie)
-        }
-        return listMovie
-    }
-
-    // Menampilkan RecyclerView
-    private fun showRecyclerList() {
+        adapter = MovieAdapter()
+        adapter.notifyDataSetChanged()
         rvMovie.layoutManager = LinearLayoutManager(activity)
-        val listMovieAdapter = MovieAdapter(list)
-        rvMovie.adapter = listMovieAdapter
+        rvMovie.adapter = adapter
 
-        listMovieAdapter.setOnItemClickCallback(object : MovieAdapter.OnItemClickCallback {
+        // Inisialisasi DataViewModel
+        dataViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(DataViewModel::class.java)
+
+        // Masukan data ke dalam RecyclerView
+        dataViewModel.setMovies()
+        showLoading(true)
+
+        dataViewModel.getMovies().observe(viewLifecycleOwner, Observer { movieItems ->
+            if (movieItems != null) {
+                adapter.setData(movieItems)
+                showLoading(false)
+            }
+        })
+        adapter.setOnItemClickCallback(object : MovieAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Movie) {
                 moveToDetailActivity(data)
             }
         })
+
     }
 
     // Pindah ke Activity Detail Movie
@@ -77,6 +73,14 @@ class MoviesFragment : Fragment() {
         val detailMovieActivity = Intent(context, MovieDetailActivity::class.java)
         detailMovieActivity.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie)
         startActivity(detailMovieActivity)
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            progressBar.visibility = View.GONE
+        }
     }
 
 }

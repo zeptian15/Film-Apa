@@ -21,12 +21,11 @@ class MovieDetailActivity : AppCompatActivity() {
 
         // Set Value
         tv_title_movie.text = movie.title
-        tv_release_year_movie.text = movie.release
-        tv_description_movie.text = movie.description
-        Glide.with(this).load(movie.background).into(img_background)
-        Glide.with(this).load(movie.poster).into(img_poster)
-
-        // Set Title Action Bar
-        supportActionBar?.title = movie.title
+        tv_description.text = movie.description
+        tv_caption.text = movie.language
+        tv_vote.text = movie.vote.toString()
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500" + movie.background)
+            .into(img_background)
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500" + movie.poster).into(img_poster)
     }
 }

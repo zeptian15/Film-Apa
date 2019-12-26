@@ -10,13 +10,20 @@ import com.septian.filmapauiux.R
 import com.septian.filmapauiux.model.TvShow
 import kotlinx.android.synthetic.main.item_tv.view.*
 
-class TvAdapter(private val listTv: ArrayList<TvShow>) :
+class TvAdapter :
     RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
     // Inisialisasi Item Click
     private var onItemClickCallback: OnItemClickCallback? = null
+    private val mData = ArrayList<TvShow>()
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
+    }
+
+    fun setData(items: ArrayList<TvShow>) {
+        mData.clear()
+        mData.addAll(items)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TvViewHolder {
@@ -25,17 +32,21 @@ class TvAdapter(private val listTv: ArrayList<TvShow>) :
         return TvViewHolder(view)
     }
 
-    override fun getItemCount(): Int = listTv.size
+    override fun getItemCount(): Int = mData.size
 
     override fun onBindViewHolder(holder: TvViewHolder, position: Int) {
-        holder.bind(listTv[position])
+        holder.bind(mData[position])
     }
 
     inner class TvViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(tvShow: TvShow) {
             with(itemView) {
                 Glide.with(itemView.context)
-                    .load(tvShow.poster)
+                    .load("https://image.tmdb.org/t/p/w500" + tvShow.poster)
+                    .apply(RequestOptions().override(550, 550))
+                    .into(img_poster)
+                Glide.with(itemView.context)
+                    .load("https://image.tmdb.org/t/p/w500" + tvShow.background)
                     .apply(RequestOptions().override(550, 550))
                     .into(img_background)
                 tv_title_tv.text = tvShow.title

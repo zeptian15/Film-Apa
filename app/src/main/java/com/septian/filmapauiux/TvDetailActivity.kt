@@ -20,13 +20,13 @@ class TvDetailActivity : AppCompatActivity() {
         val tvShow = intent.getParcelableExtra(EXTRA_TV_SHOW) as TvShow
 
         // Set Value
-        tv_title_show.text = tvShow.title
-        tv_release_year_show.text = tvShow.release
-        tv_description_show.text = tvShow.description
-        Glide.with(this).load(tvShow.background).into(img_background)
-        Glide.with(this).load(tvShow.poster).into(img_poster)
+        tv_title_tv.text = tvShow.title
+        tv_description.text = tvShow.description
+        tv_caption.text = tvShow.language
+        tv_vote.text = tvShow.vote.toString()
 
-        // Set Title Action Bar
-        supportActionBar?.title = tvShow.title
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500" + tvShow.background)
+            .into(img_background)
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500" + tvShow.poster).into(img_poster)
     }
 }
