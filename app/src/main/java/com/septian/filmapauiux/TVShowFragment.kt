@@ -41,7 +41,7 @@ class TVShowFragment : Fragment() {
 
         adapter = TvAdapter()
         adapter.notifyDataSetChanged()
-        rvTv.layoutManager = LinearLayoutManager(activity)
+        rvTv.layoutManager = LinearLayoutManager(context)
         rvTv.adapter = adapter
 
         // Inisialisasi DataViewModel

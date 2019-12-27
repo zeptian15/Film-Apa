@@ -34,11 +34,11 @@ class DataViewModel : ViewModel() {
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(
                 statusCode: Int,
-                headers: Array<out Header>,
-                responseBody: ByteArray
+                headers: Array<out Header>?,
+                responseBody: ByteArray?
             ) {
                 try {
-                    val result = String(responseBody)
+                    val result = String(responseBody!!)
                     val responseObject = JSONObject(result)
                     var list = responseObject.getJSONArray("results")
 
@@ -67,11 +67,11 @@ class DataViewModel : ViewModel() {
 
             override fun onFailure(
                 statusCode: Int,
-                headers: Array<out Header>,
-                responseBody: ByteArray,
-                error: Throwable
+                headers: Array<out Header>?,
+                responseBody: ByteArray?,
+                error: Throwable?
             ) {
-                Log.d("onFailure : ", error.message.toString())
+                Log.d("onFailure : ", error!!.message.toString())
             }
         })
     }
@@ -91,11 +91,11 @@ class DataViewModel : ViewModel() {
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(
                 statusCode: Int,
-                headers: Array<out Header>,
-                responseBody: ByteArray
+                headers: Array<out Header>?,
+                responseBody: ByteArray?
             ) {
                 try {
-                    val result = String(responseBody)
+                    val result = String(responseBody!!)
                     val responseObject = JSONObject(result)
                     var list = responseObject.getJSONArray("results")
 
@@ -124,11 +124,11 @@ class DataViewModel : ViewModel() {
 
             override fun onFailure(
                 statusCode: Int,
-                headers: Array<out Header>,
-                responseBody: ByteArray,
-                error: Throwable
+                headers: Array<out Header>?,
+                responseBody: ByteArray?,
+                error: Throwable?
             ) {
-                Log.d("onFailure : ", error.message.toString())
+                Log.d("onFailure : ", error!!.message.toString())
             }
         })
     }

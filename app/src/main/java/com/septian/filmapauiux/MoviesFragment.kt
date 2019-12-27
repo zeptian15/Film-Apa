@@ -41,7 +41,7 @@ class MoviesFragment : Fragment() {
 
         adapter = MovieAdapter()
         adapter.notifyDataSetChanged()
-        rvMovie.layoutManager = LinearLayoutManager(activity)
+        rvMovie.layoutManager = LinearLayoutManager(context)
         rvMovie.adapter = adapter
 
         // Inisialisasi DataViewModel
