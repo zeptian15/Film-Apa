@@ -14,5 +14,5 @@
     <string name="change_language_settings">Ganti Bahasa</string>
     <string name="tab_movie">Film</string>
     <string name="tab_tv">Acara Tv</string>
-
+    <string name="button_change_language">Button Ganti Bahasa</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.septian.filmapauiux.BuildConfig
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.model.TvShow
 import kotlinx.android.synthetic.main.item_tv.view.*
@@ -42,11 +43,11 @@ class TvAdapter :
         fun bind(tvShow: TvShow) {
             with(itemView) {
                 Glide.with(itemView.context)
-                    .load("https://image.tmdb.org/t/p/w500" + tvShow.poster)
+                    .load(BuildConfig.URL_IMAGES + tvShow.poster)
                     .apply(RequestOptions().override(550, 550))
                     .into(img_poster)
                 Glide.with(itemView.context)
-                    .load("https://image.tmdb.org/t/p/w500" + tvShow.background)
+                    .load(BuildConfig.URL_IMAGES + tvShow.background)
                     .apply(RequestOptions().override(550, 550))
                     .into(img_background)
                 tv_title_tv.text = tvShow.title

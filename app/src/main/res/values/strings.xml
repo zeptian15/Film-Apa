@@ -13,4 +13,5 @@
     <string name="change_language_settings">Change Language</string>
     <string name="tab_movie">Movie</string>
     <string name="tab_tv">Tv Show</string>
+    <string name="button_change_language">Button Change Language</string>
 </resources>

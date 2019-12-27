@@ -1,8 +1,8 @@
 package com.septian.filmapauiux
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.septian.filmapauiux.model.Movie
 import kotlinx.android.synthetic.main.activity_movie_detail.*
@@ -33,7 +33,7 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v.id){
+        when (v.id) {
             R.id.btn_back -> {
                 finish()
             }

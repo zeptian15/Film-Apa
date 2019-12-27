@@ -27,6 +27,7 @@
     <ImageView
         android:id="@+id/btn_change_language"
         android:layout_width="wrap_content"
+        android:contentDescription="@string/button_change_language"
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
         android:layout_marginEnd="28dp"
@@ -44,9 +45,9 @@
         android:layout_height="50dp"
         android:layout_margin="20dp"
         android:background="@drawable/search_edit_text"
+        android:hint="@string/text_search"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:hint="@string/text_search"
         android:textColor="#fff"
         android:textColorHint="#60596D"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,10 +61,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="#1F182A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_search"
-        android:background="#1F182A"
         app:tabSelectedTextColor="#BB64FF"
         app:tabTextColor="@android:color/darker_gray" />
 
@@ -71,9 +72,8 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tabs"
-        android:layout_below="@id/tabs" />
-
+        android:layout_below="@id/tabs"
+        app:layout_constraintTop_toBottomOf="@id/tabs" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

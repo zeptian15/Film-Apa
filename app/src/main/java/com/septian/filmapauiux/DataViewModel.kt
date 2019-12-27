@@ -15,9 +15,6 @@ import kotlin.collections.ArrayList
 
 class DataViewModel : ViewModel() {
     // Inisialisasi API Key
-    companion object {
-        private const val API_KEY = "a1585fb3c55c240f60c0575f5102cc9d"
-    }
 
     // Inisialisasi List Movies dan TvShows
     val listMovies = MutableLiveData<ArrayList<Movie>>()
@@ -29,7 +26,7 @@ class DataViewModel : ViewModel() {
         val client = AsyncHttpClient()
         val listMoviesItems = ArrayList<Movie>()
         val url =
-            "https://api.themoviedb.org/3/discover/movie?api_key=$API_KEY&language=$currentLanguage"
+            "https://api.themoviedb.org/3/discover/movie?api_key=${BuildConfig.API_KEY}&language=$currentLanguage"
 
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(
@@ -71,7 +68,9 @@ class DataViewModel : ViewModel() {
                 responseBody: ByteArray?,
                 error: Throwable?
             ) {
-                Log.d("onFailure : ", error!!.message.toString())
+                if (error != null) {
+                    Log.d("onFailure : ", error.message.toString())
+                }
             }
         })
     }
@@ -86,7 +85,7 @@ class DataViewModel : ViewModel() {
         val currentLanguage = Locale.getDefault().language
         val listTvShowsItems = ArrayList<TvShow>()
         val url =
-            "https://api.themoviedb.org/3/discover/tv?api_key=$API_KEY&language=$currentLanguage"
+            "https://api.themoviedb.org/3/discover/tv?api_key=${BuildConfig.API_KEY}&language=$currentLanguage"
 
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(
@@ -128,7 +127,9 @@ class DataViewModel : ViewModel() {
                 responseBody: ByteArray?,
                 error: Throwable?
             ) {
-                Log.d("onFailure : ", error!!.message.toString())
+                if (error != null) {
+                    Log.d("onFailure : ", error.message.toString())
+                }
             }
         })
     }

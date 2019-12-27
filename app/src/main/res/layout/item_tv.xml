@@ -15,37 +15,37 @@
             android:id="@+id/img_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/background_image"/>
+            android:contentDescription="@string/background_image"
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/layer_poster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:alpha="0.3"/>
+            android:alpha="0.3"
+            android:background="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/tv_title_tv"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="110dp"
-            android:text="@string/title_movies"
-            android:textSize="18sp"
-            android:textColor="@color/colorAccent"
-            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"/>
+            android:layout_gravity="center_vertical"
+            android:background="@color/colorPrimaryDark"
+            android:paddingLeft="110dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/title_movies"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/img_poster"
             android:layout_width="80dp"
-            android:contentDescription="@string/image_poster"
-            tools:background="@color/colorPrimary"
-            android:layout_marginLeft="10dp"
+            android:layout_height="120dp"
             android:layout_gravity="center_vertical"
-            android:layout_height="120dp"/>
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/image_poster"
+            tools:background="@color/colorPrimary" />
 
     </FrameLayout>
 
