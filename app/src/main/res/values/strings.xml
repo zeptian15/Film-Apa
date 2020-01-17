@@ -13,5 +13,16 @@
     <string name="change_language_settings">Change Language</string>
     <string name="tab_movie">Movie</string>
     <string name="tab_tv">Tv Show</string>
+    <string name="tab_dashboard">Dashboard</string>
+    <string name="tab_favourite">Favourite</string>
     <string name="button_change_language">Button Change Language</string>
+    <string name="title_favourite">Favourite</string>
+    <string name="success">Successfully added to favorites!</string>
+    <string name="fail">Failed to add to favorites!</string>
+    <string name="success_del">Successfully deleted favorites!</string>
+    <string name="fail_del">Failed to delete favorites!</string>
+    <string name="no_data">There is no data at the moment</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_favourites">Favourites</string>
+
 </resources>
