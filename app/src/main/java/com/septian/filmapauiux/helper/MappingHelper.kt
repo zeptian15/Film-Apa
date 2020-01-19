@@ -10,7 +10,8 @@ object MappingHelper {
         val favlist = ArrayList<Favourite>()
         notesCursor.moveToFirst()
         while(notesCursor.moveToNext()){
-            val id = notesCursor.getInt(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID))
+            val id =
+                notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.ID))
             val title = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.TITLE))
             val description = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.DESCRIPTION))
             val language = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.LANGUAGE))
@@ -27,7 +28,8 @@ object MappingHelper {
 
     fun mapCursorToObject(notesCursor: Cursor) :Favourite {
         notesCursor.moveToNext()
-        val id = notesCursor.getInt(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns._ID))
+        val id =
+            notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.ID))
         val title = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.TITLE))
         val description = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.DESCRIPTION))
         val language = notesCursor.getString(notesCursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.LANGUAGE))

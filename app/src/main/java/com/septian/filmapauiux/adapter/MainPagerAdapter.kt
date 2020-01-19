@@ -5,11 +5,11 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.septian.filmapauiux.FavMoviesFragment
-import com.septian.filmapauiux.FavTvShowFragment
 import com.septian.filmapauiux.R
+import com.septian.filmapauiux.ui.Dashboard.MoviesList
+import com.septian.filmapauiux.ui.Dashboard.TVShowList
 
-class FavouriteViewPagerAdapter(private val mContext: Context, fm: FragmentManager) :
+class MainPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     // Inisialisasi Nama Tab
@@ -19,8 +19,8 @@ class FavouriteViewPagerAdapter(private val mContext: Context, fm: FragmentManag
     override fun getItem(position: Int): Fragment {
         var fragment: Fragment? = null
         when (position) {
-            0 -> fragment = FavMoviesFragment()
-            1 -> fragment = FavTvShowFragment()
+            0 -> fragment = MoviesList()
+            1 -> fragment = TVShowList()
         }
         return fragment as Fragment
     }

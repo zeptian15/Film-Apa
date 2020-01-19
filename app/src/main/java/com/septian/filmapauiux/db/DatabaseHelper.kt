@@ -13,7 +13,7 @@ internal class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DAT
         private const val DATABASE_NAME = "dbfilmapa"
         private const val DATABASE_VERSION = 1
         private val SQL_CREATE_TABLE_FAVOURITE = "CREATE TABLE $TABLE_NAME" +
-                " (${NoteColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " (${NoteColumns.ID} TEXT PRIMARY KEY," +
                 " ${NoteColumns.TITLE} TEXT NOT NULL, " +
                 " ${NoteColumns.DESCRIPTION} TEXT NOT NULL, " +
                 " ${NoteColumns.LANGUAGE} TEXT NOT NULL, " +

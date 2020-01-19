@@ -19,12 +19,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FavouriteDetailActivity"></activity>
+        <provider
+            android:name=".FavouriteProvider"
+            android:authorities="com.septian.filmapauiux"
+            android:enabled="true"
+            android:exported="true"
+            android:readPermission="com.septian.filmapauiux.READ_DATABASE"
+            android:writePermission="com.septian.filmapauiux.WRITE_DATABASE"></provider>
+
+        <activity android:name=".ui.Favourite.FavouriteDetail" />
         <activity android:name=".FavouriteActivity" />
-        <activity android:name=".TvDetailActivity" />
-        <activity android:name=".MovieDetailActivity" />
+        <activity android:name=".ui.Detail.TvDetailActivity" />
+        <activity android:name=".ui.Detail.MovieDetailActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

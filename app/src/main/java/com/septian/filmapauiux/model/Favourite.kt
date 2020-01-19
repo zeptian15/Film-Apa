@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Favourite(
-    var id: Int = 0,
+    var id: String? = null,
     var title: String? = null,
     var description: String? = null,
     var language: String? = null,

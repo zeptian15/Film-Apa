@@ -1,16 +1,17 @@
-package com.septian.filmapauiux
+package com.septian.filmapauiux.ui.Favourite
 
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.septian.filmapauiux.adapter.FavouriteAdapter
-import com.septian.filmapauiux.db.FavouriteHelper
+import com.septian.filmapauiux.R
+import com.septian.filmapauiux.adapter.FavouriteRecyclerAdapter
+import com.septian.filmapauiux.db.DataHelper
 import com.septian.filmapauiux.helper.MappingHelper
 import com.septian.filmapauiux.model.Favourite
 import kotlinx.android.synthetic.main.fragment_fav_tv_show.*
@@ -22,13 +23,14 @@ import kotlinx.coroutines.launch
 /**
  * A simple [Fragment] subclass.
  */
-class FavTvShowFragment : Fragment() {
+class FavouritesTvShow : Fragment() {
     // Inisialisasi FavHelper
-    private lateinit var favHelper: FavouriteHelper
-    private lateinit var adapter: FavouriteAdapter
+    private lateinit var favHelper: DataHelper
+    private lateinit var recyclerAdapter: FavouriteRecyclerAdapter
 
     companion object {
         private const val EXTRA_STATE = "EXTRA_STATE"
+        private const val REQUEST_CODE = 100
     }
 
     override fun onCreateView(
@@ -42,13 +44,13 @@ class FavTvShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        favHelper = FavouriteHelper.getInstance(view.context)
+        favHelper = DataHelper.getInstance(view.context)
         favHelper.open()
 
-        adapter = FavouriteAdapter()
-        adapter.notifyDataSetChanged()
+        recyclerAdapter = FavouriteRecyclerAdapter()
+        recyclerAdapter.notifyDataSetChanged()
         rv_fav_tv.layoutManager = LinearLayoutManager(context)
-        rv_fav_tv.adapter = adapter
+        rv_fav_tv.adapter = recyclerAdapter
         rv_fav_tv.setHasFixedSize(true)
 
         if (savedInstanceState == null) {
@@ -57,27 +59,32 @@ class FavTvShowFragment : Fragment() {
         } else {
             val list = savedInstanceState.getParcelableArrayList<Favourite>(EXTRA_STATE)
             if (list != null) {
-                adapter.favList = list
+                recyclerAdapter.favList = list
             }
         }
 
-        adapter.setOnItemClickCallback(object : FavouriteAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Favourite) {
-                moveToDetailActivity(data)
+        recyclerAdapter.setOnItemClickCallback(object :
+            FavouriteRecyclerAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Favourite, position: Int) {
+                moveToDetailActivity(data, position)
             }
         })
     }
 
     // Pindah ke Activity Detail Movie
-    private fun moveToDetailActivity(favourite: Favourite) {
-        val detailFavActivity = Intent(context, FavouriteDetailActivity::class.java)
-        detailFavActivity.putExtra(FavouriteDetailActivity.EXTRA_FAVOURITE, favourite)
-        startActivity(detailFavActivity)
+    private fun moveToDetailActivity(favourite: Favourite, position: Int) {
+        val detailFavActivity = Intent(context, FavouriteDetail::class.java)
+        detailFavActivity.putExtra(FavouriteDetail.EXTRA_FAVOURITE, favourite)
+        detailFavActivity.putExtra(FavouriteDetail.EXTRA_POSITION, position)
+        startActivityForResult(
+            detailFavActivity,
+            REQUEST_CODE
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(EXTRA_STATE, adapter.favList)
+        outState.putParcelableArrayList(EXTRA_STATE, recyclerAdapter.favList)
     }
 
     override fun onDestroy() {
@@ -95,10 +102,22 @@ class FavTvShowFragment : Fragment() {
             progressBar.visibility = View.INVISIBLE
             val tv = defferedMovies.await()
             if(tv.size > 0){
-                adapter.favList = tv
+                recyclerAdapter.favList = tv
             } else {
-                adapter.favList = ArrayList()
+                recyclerAdapter.favList = ArrayList()
                 Snackbar.make(rv_fav_tv, R.string.no_data, Snackbar.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == FavouriteDetail.RESULT_DELETE) {
+                val pos = data?.getIntExtra(FavouriteDetail.EXTRA_POSITION, 0)
+                recyclerAdapter.removeItem(pos)
+                Snackbar.make(rv_fav_tv, R.string.success_del, Snackbar.LENGTH_SHORT).show()
             }
         }
     }

@@ -5,29 +5,29 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.septian.filmapauiux.db.DatabaseContract.NoteColumns.Companion.ID
 import com.septian.filmapauiux.db.DatabaseContract.NoteColumns.Companion.TABLE_NAME
 import com.septian.filmapauiux.db.DatabaseContract.NoteColumns.Companion.TYPE
-import com.septian.filmapauiux.db.DatabaseContract.NoteColumns.Companion._ID
 import java.sql.SQLException
 
-class FavouriteHelper (context: Context) {
+class DataHelper(context: Context) {
     private val databaseHelper: DatabaseHelper = DatabaseHelper(context)
 
     private lateinit var database: SQLiteDatabase
 
     companion object {
         private const val DATABASE_TABLE = TABLE_NAME
-        private var INSTANCE: FavouriteHelper? = null
+        private var INSTANCE: DataHelper? = null
 
-        fun getInstance(context: Context): FavouriteHelper {
+        fun getInstance(context: Context): DataHelper {
             if(INSTANCE == null){
                 synchronized(SQLiteOpenHelper::class.java){
                     if(INSTANCE == null){
-                        INSTANCE = FavouriteHelper(context)
+                        INSTANCE = DataHelper(context)
                     }
                 }
             }
-            return INSTANCE as FavouriteHelper
+            return INSTANCE as DataHelper
         }
     }
 
@@ -51,7 +51,20 @@ class FavouriteHelper (context: Context) {
             null,
             null,
             null,
-            "$_ID ASC",
+            "$ID ASC",
+            null
+        )
+    }
+
+    fun queryById(id: String): Cursor {
+        return database.query(
+            DATABASE_TABLE,
+            null,
+            "$ID = ?",
+            arrayOf(id),
+            null,
+            null,
+            null,
             null)
     }
 
@@ -63,7 +76,7 @@ class FavouriteHelper (context: Context) {
             null,
             null,
             null,
-            "$_ID ASC",
+            "$ID ASC",
             null)
     }
 
@@ -75,7 +88,7 @@ class FavouriteHelper (context: Context) {
             null,
             null,
             null,
-            "$_ID ASC",
+            "$ID ASC",
             null)
     }
 
@@ -84,6 +97,6 @@ class FavouriteHelper (context: Context) {
     }
 
     fun deleteById(id: String): Int {
-        return database.delete(DATABASE_TABLE, "$_ID = ?", arrayOf(id))
+        return database.delete(DATABASE_TABLE, "$ID = ?", arrayOf(id))
     }
 }

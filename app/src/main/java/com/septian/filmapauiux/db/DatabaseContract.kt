@@ -8,10 +8,10 @@ object DatabaseContract {
     const val AUTHORITY = "com.septian.filmapauiux"
     const val SCHEME = "content"
 
-    internal  class NoteColumns : BaseColumns {
+    internal class NoteColumns : BaseColumns {
         companion object {
             const val TABLE_NAME = "favourite"
-            const val _ID = "_id"
+            const val ID = "id"
             const val TITLE = "title"
             const val DESCRIPTION = "description"
             const val LANGUAGE = "language"

@@ -8,57 +8,57 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.septian.filmapauiux.BuildConfig
 import com.septian.filmapauiux.R
-import com.septian.filmapauiux.model.Movie
-import kotlinx.android.synthetic.main.item_movie.view.*
+import com.septian.filmapauiux.model.TvShow
+import kotlinx.android.synthetic.main.item_tv.view.*
 
-class MovieAdapter :
-    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class TvShowRecyclerAdapter :
+    RecyclerView.Adapter<TvShowRecyclerAdapter.TvViewHolder>() {
     // Inisialisasi Item Click
     private var onItemClickCallback: OnItemClickCallback? = null
-    private val mData = ArrayList<Movie>()
+    private val mData = ArrayList<TvShow>()
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setData(items: ArrayList<Movie>) {
+    fun setData(items: ArrayList<TvShow>) {
         mData.clear()
         mData.addAll(items)
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MovieViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TvViewHolder {
         val view =
-            LayoutInflater.from(viewGroup.context).inflate(R.layout.item_movie, viewGroup, false)
-        return MovieViewHolder(view)
+            LayoutInflater.from(viewGroup.context).inflate(R.layout.item_tv, viewGroup, false)
+        return TvViewHolder(view)
     }
 
     override fun getItemCount(): Int = mData.size
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TvViewHolder, position: Int) {
         holder.bind(mData[position])
     }
 
-    inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(movie: Movie) {
+    inner class TvViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(tvShow: TvShow) {
             with(itemView) {
                 Glide.with(itemView.context)
-                    .load(BuildConfig.URL_IMAGES + movie.poster)
+                    .load(BuildConfig.URL_IMAGES + tvShow.poster)
                     .apply(RequestOptions().override(550, 550))
                     .into(img_poster)
                 Glide.with(itemView.context)
-                    .load(BuildConfig.URL_IMAGES + movie.background)
+                    .load(BuildConfig.URL_IMAGES + tvShow.background)
                     .apply(RequestOptions().override(550, 550))
                     .into(img_background)
-                tv_title_movie.text = movie.title
+                tv_title_tv.text = tvShow.title
 
-                itemView.setOnClickListener { onItemClickCallback?.onItemClicked(movie) }
+                itemView.setOnClickListener { onItemClickCallback?.onItemClicked(tvShow) }
             }
         }
     }
 
     // Inisialisasi Interface OnItemClick
     interface OnItemClickCallback {
-        fun onItemClicked(data: Movie)
+        fun onItemClicked(data: TvShow)
     }
 }

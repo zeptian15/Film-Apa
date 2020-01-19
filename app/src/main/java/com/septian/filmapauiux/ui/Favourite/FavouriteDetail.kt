@@ -1,43 +1,41 @@
-package com.septian.filmapauiux
+package com.septian.filmapauiux.ui.Favourite
 
-import android.content.ContentValues
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
-import com.septian.filmapauiux.db.DatabaseContract
-import com.septian.filmapauiux.db.FavouriteHelper
+import com.septian.filmapauiux.R
+import com.septian.filmapauiux.db.DataHelper
 import com.septian.filmapauiux.model.Favourite
 import kotlinx.android.synthetic.main.activity_favourite_detail.*
 
-class FavouriteDetailActivity : AppCompatActivity(), View.OnClickListener {
+class FavouriteDetail : AppCompatActivity(), View.OnClickListener {
     // Inisialisasi Object
     companion object {
         const val EXTRA_FAVOURITE = "extra_favourite"
         const val EXTRA_POSITION = "extra_position"
         const val RESULT_DELETE = 301
-        const val REQUEST_DELETE = 101
         const val ALERT_DIALOG_CLOSE = 10
         const val ALERT_DIALOG_DELETE = 20
     }
-    private lateinit var favHelper: FavouriteHelper
-    private var position: Int = 0
+
+    private lateinit var favHelper: DataHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favourite_detail)
 
         // Inisialisasi Note Helper
-        favHelper = FavouriteHelper.getInstance(applicationContext)
+        favHelper = DataHelper.getInstance(applicationContext)
         favHelper.open()
 
         // Ambil data
         val fav = intent.getParcelableExtra(EXTRA_FAVOURITE) as Favourite
 
         // Set Value
+        Toast.makeText(applicationContext, "ID : " + fav.id, Toast.LENGTH_SHORT).show()
         tv_title_favourite.text = fav.title
         tv_description.text = fav.description
         tv_caption.text = fav.language
@@ -57,14 +55,19 @@ class FavouriteDetailActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btn_delete_fav -> {
                 val fav = intent.getParcelableExtra(EXTRA_FAVOURITE) as Favourite
+                val position = intent.getIntExtra(EXTRA_POSITION, 0)
 
                 val result = favHelper.deleteById(fav.id.toString()).toLong()
                 if(result > 0){
-                    val intent = Intent(this@FavouriteDetailActivity, FavouriteActivity::class.java)
-                    startActivity(intent)
+                    val resultintent = Intent()
+                    resultintent.putExtra(EXTRA_POSITION, position)
+                    setResult(RESULT_DELETE, resultintent)
                     finish()
                 } else {
-                    Toast.makeText(applicationContext, R.string.fail_del, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        applicationContext,
+                        R.string.fail_del, Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }

@@ -1,4 +1,4 @@
-package com.septian.filmapauiux
+package com.septian.filmapauiux.ui.Dashboard
 
 
 import android.content.Intent
@@ -11,18 +11,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.septian.filmapauiux.DataViewModel
+import com.septian.filmapauiux.R
 import com.septian.filmapauiux.model.TvShow
-import com.septian.rickymaulana.filmapa.adapter.TvAdapter
+import com.septian.filmapauiux.ui.Detail.TvDetailActivity
+import com.septian.rickymaulana.filmapa.adapter.TvShowRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class TVShowFragment : Fragment() {
+class TVShowList : Fragment() {
     // Inisialisasi Variabel
     private val list = ArrayList<TvShow>()
     private lateinit var rvTv: RecyclerView
-    private lateinit var adapter: TvAdapter
+    private lateinit var showRecyclerAdapter: TvShowRecyclerAdapter
 
     private lateinit var dataViewModel: DataViewModel
 
@@ -39,10 +42,10 @@ class TVShowFragment : Fragment() {
 
         rvTv = view.findViewById(R.id.rv_tv)
 
-        adapter = TvAdapter()
-        adapter.notifyDataSetChanged()
+        showRecyclerAdapter = TvShowRecyclerAdapter()
+        showRecyclerAdapter.notifyDataSetChanged()
         rvTv.layoutManager = LinearLayoutManager(context)
-        rvTv.adapter = adapter
+        rvTv.adapter = showRecyclerAdapter
 
         // Inisialisasi DataViewModel
         dataViewModel = ViewModelProvider(
@@ -56,13 +59,14 @@ class TVShowFragment : Fragment() {
 
         dataViewModel.getTvShows().observe(viewLifecycleOwner, Observer { tvShowItems ->
             if (tvShowItems != null) {
-                adapter.setData(tvShowItems)
+                showRecyclerAdapter.setData(tvShowItems)
 
                 showLoading(false)
             }
         })
 
-        adapter.setOnItemClickCallback(object : TvAdapter.OnItemClickCallback {
+        showRecyclerAdapter.setOnItemClickCallback(object :
+            TvShowRecyclerAdapter.OnItemClickCallback {
             override fun onItemClicked(data: TvShow) {
                 moveToDetailActivity(data)
             }

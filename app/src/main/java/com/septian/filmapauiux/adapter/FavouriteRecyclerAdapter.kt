@@ -1,6 +1,5 @@
 package com.septian.filmapauiux.adapter
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,10 @@ import com.septian.filmapauiux.R
 import com.septian.filmapauiux.model.Favourite
 import kotlinx.android.synthetic.main.item_favourite.view.*
 
-class FavouriteAdapter: RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>() {
+class FavouriteRecyclerAdapter : RecyclerView.Adapter<FavouriteRecyclerAdapter.FavViewHolder>() {
     // Inisialisasi Item Click
     private var onItemClickCallback: OnItemClickCallback? = null
+//    private var position: Int = 0
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
@@ -30,12 +30,15 @@ class FavouriteAdapter: RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>() {
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteAdapter.FavViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): FavouriteRecyclerAdapter.FavViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_favourite,parent, false)
         return FavViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: FavouriteAdapter.FavViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavouriteRecyclerAdapter.FavViewHolder, position: Int) {
         holder.bind(favList[position])
     }
 
@@ -55,7 +58,12 @@ class FavouriteAdapter: RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>() {
                         .into(img_background)
                     tv_title_favourite.text = fav.title
 
-                    itemView.setOnClickListener { onItemClickCallback?.onItemClicked(fav) }
+                    itemView.setOnClickListener {
+                        onItemClickCallback?.onItemClicked(
+                            fav,
+                            position
+                        )
+                    }
                 }
             }
         }
@@ -66,14 +74,20 @@ class FavouriteAdapter: RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>() {
         notifyItemInserted(this.favList.size - 1)
     }
 
-    fun removeItem(position: Int){
-        this.favList.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, this.favList.size)
+    fun removeItem(position: Int?) {
+        if (position != null) {
+            this.favList.removeAt(position)
+        }
+        if (position != null) {
+            notifyItemRemoved(position)
+        }
+        if (position != null) {
+            notifyItemRangeChanged(position, this.favList.size)
+        }
     }
 
     // Inisialisasi Interface OnItemClick
     interface OnItemClickCallback {
-        fun onItemClicked(data: Favourite)
+        fun onItemClicked(data: Favourite, position: Int)
     }
 }

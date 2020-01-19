@@ -1,4 +1,4 @@
-package com.septian.filmapauiux
+package com.septian.filmapauiux.ui.Dashboard
 
 
 import android.content.Intent
@@ -11,18 +11,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.septian.filmapauiux.DataViewModel
+import com.septian.filmapauiux.R
 import com.septian.filmapauiux.model.Movie
-import com.septian.rickymaulana.filmapa.adapter.MovieAdapter
+import com.septian.filmapauiux.ui.Detail.MovieDetailActivity
+import com.septian.rickymaulana.filmapa.adapter.MovieRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class MoviesFragment : Fragment() {
+class MoviesList : Fragment() {
     // Inisialisasi Variabel
     private val list = ArrayList<Movie>()
     private lateinit var rvMovie: RecyclerView
-    private lateinit var adapter: MovieAdapter
+    private lateinit var recyclerAdapter: MovieRecyclerAdapter
 
     private lateinit var dataViewModel: DataViewModel
 
@@ -39,10 +42,10 @@ class MoviesFragment : Fragment() {
         rvMovie = view.findViewById(R.id.rv_movie)
         rvMovie.setHasFixedSize(true)
 
-        adapter = MovieAdapter()
-        adapter.notifyDataSetChanged()
+        recyclerAdapter = MovieRecyclerAdapter()
+        recyclerAdapter.notifyDataSetChanged()
         rvMovie.layoutManager = LinearLayoutManager(context)
-        rvMovie.adapter = adapter
+        rvMovie.adapter = recyclerAdapter
 
         // Inisialisasi DataViewModel
         dataViewModel = ViewModelProvider(
@@ -56,11 +59,11 @@ class MoviesFragment : Fragment() {
 
         dataViewModel.getMovies().observe(viewLifecycleOwner, Observer { movieItems ->
             if (movieItems != null) {
-                adapter.setData(movieItems)
+                recyclerAdapter.setData(movieItems)
                 showLoading(false)
             }
         })
-        adapter.setOnItemClickCallback(object : MovieAdapter.OnItemClickCallback {
+        recyclerAdapter.setOnItemClickCallback(object : MovieRecyclerAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Movie) {
                 moveToDetailActivity(data)
             }

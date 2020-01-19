@@ -42,6 +42,7 @@ class DataViewModel : ViewModel() {
                     for (i in 0 until list.length()) {
                         val movie = list.getJSONObject(i)
                         val movieItems = Movie()
+                        movieItems.id = movie.getInt("id").toString()
                         movieItems.title = movie.getString("title")
                         if (movie.getString("overview") == "") {
                             movieItems.description =
@@ -101,6 +102,7 @@ class DataViewModel : ViewModel() {
                     for (i in 0 until list.length()) {
                         val tvShow = list.getJSONObject(i)
                         val tvShowItems = TvShow()
+                        tvShowItems.id = tvShow.getInt("id").toString()
                         tvShowItems.title = tvShow.getString("name")
                         if (tvShow.getString("overview") == "") {
                             tvShowItems.description =
