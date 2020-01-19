@@ -91,7 +91,7 @@ class FavouritesMovies : Fragment() {
     private fun loadFavMoviesAsync() {
         GlobalScope.launch(Dispatchers.Main) {
             val defferedMovies = async(Dispatchers.IO) {
-                val cursor = favHelper.queryAll()
+                val cursor = favHelper.queryMovies()
                 MappingHelper.mapCursorToArrayList(cursor)
             }
             val movies = defferedMovies.await()

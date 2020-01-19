@@ -24,7 +24,7 @@
     <string name="no_data">There is no data at the moment</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_favourites">Favourites</string>
-    <string name="data_exist">Data already exists!</string>
+    <string name="data_exist">Already a favorite!</string>
 
 
 </resources>

@@ -35,7 +35,6 @@ class FavouriteDetail : AppCompatActivity(), View.OnClickListener {
         val fav = intent.getParcelableExtra(EXTRA_FAVOURITE) as Favourite
 
         // Set Value
-        Toast.makeText(applicationContext, "ID : " + fav.id, Toast.LENGTH_SHORT).show()
         tv_title_favourite.text = fav.title
         tv_description.text = fav.description
         tv_caption.text = fav.language

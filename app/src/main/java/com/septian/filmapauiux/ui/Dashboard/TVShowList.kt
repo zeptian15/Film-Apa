@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.septian.filmapauiux.DataViewModel
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.model.TvShow
-import com.septian.filmapauiux.ui.Detail.TvDetailActivity
+import com.septian.filmapauiux.ui.Detail.TvShowDetail
 import com.septian.rickymaulana.filmapa.adapter.TvShowRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 
@@ -76,8 +76,8 @@ class TVShowList : Fragment() {
 
     // Pindah ke Activity Detail Tv Show
     private fun moveToDetailActivity(tvShow: TvShow) {
-        val detailTvActivity = Intent(context, TvDetailActivity::class.java)
-        detailTvActivity.putExtra(TvDetailActivity.EXTRA_TV_SHOW, tvShow)
+        val detailTvActivity = Intent(context, TvShowDetail::class.java)
+        detailTvActivity.putExtra(TvShowDetail.EXTRA_TV_SHOW, tvShow)
         startActivity(detailTvActivity)
     }
 

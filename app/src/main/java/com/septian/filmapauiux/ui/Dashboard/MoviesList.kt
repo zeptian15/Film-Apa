@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.septian.filmapauiux.DataViewModel
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.model.Movie
-import com.septian.filmapauiux.ui.Detail.MovieDetailActivity
+import com.septian.filmapauiux.ui.Detail.MovieDetail
 import com.septian.rickymaulana.filmapa.adapter.MovieRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_movies.*
 
@@ -73,8 +73,8 @@ class MoviesList : Fragment() {
 
     // Pindah ke Activity Detail Movie
     private fun moveToDetailActivity(movie: Movie) {
-        val detailMovieActivity = Intent(context, MovieDetailActivity::class.java)
-        detailMovieActivity.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie)
+        val detailMovieActivity = Intent(context, MovieDetail::class.java)
+        detailMovieActivity.putExtra(MovieDetail.EXTRA_MOVIE, movie)
         startActivity(detailMovieActivity)
     }
 

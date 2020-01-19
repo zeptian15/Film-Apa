@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/container_detail_movie"
     android:background="@color/colorPrimaryDark"
-    tools:context=".ui.Detail.MovieDetailActivity">
+    tools:context=".ui.Detail.MovieDetail">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
