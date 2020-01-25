@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Film Apa</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="title_movies">Film</string>
     <string name="title_tv_show">Acara TV</string>
-    <string name="title_card_movie">Judul Film</string>
-    <string name="title_card_tv">Judul Acara TV</string>
     <string name="background_image">Gambar Latar Belakang</string>
     <string name="image_poster">Gambar Poster</string>
-    <string name="release_year">Tahun Rilis</string>
     <string name="overview">Gambaran</string>
-    <string name="text_search">Ketik judul film atau acara tv</string>
-    <string name="change_language_settings">Ganti Bahasa</string>
     <string name="tab_movie">Film</string>
     <string name="tab_tv">Acara Tv</string>
-    <string name="tab_dashboard">Dasbor</string>
     <string name="tab_favourite">Favorit</string>
     <string name="button_change_language">Button Ganti Bahasa</string>
     <string name="title_favourite">Favorit</string>
     <string name="success">Berhasil menambahkan ke favorit!</string>
-    <string name="fail">Gagal menambahkan ke favorit</string>
     <string name="success_del">Berhasil menghapus favorit!</string>
     <string name="fail_del">Gagal menghapus favorit!</string>
     <string name="no_data">Tidak ada data saat ini</string>
     <string name="title_dashboard">Dasbor</string>
     <string name="title_favourites">Favorit</string>
     <string name="data_exist">Sudah menjadi favorit!</string>
+    <string name="title_search">Cari</string>
 </resources>

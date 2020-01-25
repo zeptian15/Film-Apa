@@ -1,4 +1,4 @@
-package com.septian.filmapauiux.ui.Detail
+package com.septian.filmapauiux.ui.detail
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteException
@@ -11,13 +11,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.db.DataHelper
 import com.septian.filmapauiux.db.DatabaseContract
-import com.septian.filmapauiux.model.TvShow
-import kotlinx.android.synthetic.main.activity_tv_detail.*
+import com.septian.filmapauiux.model.Movie
+import kotlinx.android.synthetic.main.activity_movie_detail.*
 
-class TvShowDetail : AppCompatActivity(), View.OnClickListener {
+class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
     // Inisialisasi Object
     companion object {
-        const val EXTRA_TV_SHOW = "extra_tv_show"
+        const val EXTRA_MOVIE = "extra_movie"
     }
 
     private lateinit var favHelper: DataHelper
@@ -32,30 +32,30 @@ class TvShowDetail : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tv_detail)
+        setContentView(R.layout.activity_movie_detail)
 
         // Inisialisasi Note Helper
         favHelper = DataHelper.getInstance(applicationContext)
         favHelper.open()
 
         // Ambil data
-        val tvShow = intent.getParcelableExtra(EXTRA_TV_SHOW) as TvShow
+        val movie = intent.getParcelableExtra(EXTRA_MOVIE) as Movie
 
         // Set Value
-        tv_title_tv.text = tvShow.title
-        tv_description.text = tvShow.description
-        tv_caption.text = tvShow.language
-        tv_vote.text = tvShow.vote.toString()
-
-        Glide.with(this).load("https://image.tmdb.org/t/p/w500" + tvShow.background)
+        tv_title_movie.text = movie.title
+        tv_description.text = movie.description
+        tv_caption.text = movie.language
+        tv_vote.text = movie.vote.toString()
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500" + movie.background)
             .into(img_background)
-        Glide.with(this).load("https://image.tmdb.org/t/p/w500" + tvShow.poster).into(img_poster)
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500" + movie.poster).into(img_poster)
 
         btn_back.setOnClickListener(this)
-        btn_fav_tv.setOnClickListener(this)
+        btn_fav_movie.setOnClickListener(this)
 
         // Set data
-        setData(tvShow)
+        setData(movie)
+
     }
 
     override fun onClick(v: View) {
@@ -63,13 +63,13 @@ class TvShowDetail : AppCompatActivity(), View.OnClickListener {
             R.id.btn_back -> {
                 finish()
             }
-            R.id.btn_fav_tv -> {
+            R.id.btn_fav_movie -> {
                 // Masukan ke database
                 if (checkItem()) {
                     addToFavourite()
                 } else {
                     Snackbar.make(
-                        container_detail_tv,
+                        container_detail_movie,
                         R.string.data_exist, Snackbar.LENGTH_SHORT
                     ).show()
                 }
@@ -89,18 +89,6 @@ class TvShowDetail : AppCompatActivity(), View.OnClickListener {
         return true
     }
 
-    private fun setData(tvShow: TvShow) {
-        // Set Values untuk dimasukan ke DB
-        id = tvShow.id.toString()
-        title = tvShow.title.toString()
-        description = tvShow.description.toString()
-        language = tvShow.language.toString()
-        vote = tvShow.vote.toString()
-        poster = tvShow.poster.toString()
-        background = tvShow.background.toString()
-        type = "tv"
-    }
-
     private fun addToFavourite() {
         val values = ContentValues()
         values.put(DatabaseContract.NoteColumns.ID, id)
@@ -115,12 +103,24 @@ class TvShowDetail : AppCompatActivity(), View.OnClickListener {
         try {
             favHelper.insert(values)
             Snackbar.make(
-                container_detail_tv,
+                container_detail_movie,
                 R.string.success,
                 Snackbar.LENGTH_SHORT
             ).show()
         } catch (e: SQLiteException) {
             Log.d("masuk", e.message.toString())
         }
+    }
+
+    private fun setData(movie: Movie) {
+        // Set Values untuk dimasukan ke DB
+        id = movie.id.toString()
+        title = movie.title.toString()
+        description = movie.description.toString()
+        language = movie.language.toString()
+        vote = movie.vote.toString()
+        poster = movie.poster.toString()
+        background = movie.background.toString()
+        type = "movie"
     }
 }

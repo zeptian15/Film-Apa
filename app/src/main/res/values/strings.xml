@@ -1,30 +1,23 @@
 <resources>
     <string name="app_name">What Movie</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="title_movies">Movies</string>
     <string name="title_tv_show">TV Show</string>
-    <string name="title_card_movie">Movie Title</string>
-    <string name="title_card_tv">TV Show Title</string>
     <string name="background_image">Background Image</string>
     <string name="image_poster">Image Poster</string>
-    <string name="release_year">Release Year</string>
     <string name="overview">Overview</string>
-    <string name="text_search">Type movie or tv show title</string>
-    <string name="change_language_settings">Change Language</string>
     <string name="tab_movie">Movie</string>
     <string name="tab_tv">Tv Show</string>
-    <string name="tab_dashboard">Dashboard</string>
     <string name="tab_favourite">Favourite</string>
     <string name="button_change_language">Button Change Language</string>
     <string name="title_favourite">Favourite</string>
     <string name="success">Successfully added to favorites!</string>
-    <string name="fail">Failed to add to favorites!</string>
     <string name="success_del">Successfully deleted favorites!</string>
     <string name="fail_del">Failed to delete favorites!</string>
     <string name="no_data">There is no data at the moment</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_favourites">Favourites</string>
     <string name="data_exist">Already a favorite!</string>
+    <string name="title_search">Search</string>
 
 
 </resources>

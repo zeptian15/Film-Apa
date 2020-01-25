@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.septian.filmapauiux.R
-import com.septian.filmapauiux.ui.Favourite.FavouritesMovies
-import com.septian.filmapauiux.ui.Favourite.FavouritesTvShow
+import com.septian.filmapauiux.ui.favourite.FavouritesMovies
+import com.septian.filmapauiux.ui.favourite.FavouritesTvShow
 
 class FavouritePagerAdapter(private val mContext: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

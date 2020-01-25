@@ -2,7 +2,6 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_dashboard">
 
     <fragment
@@ -16,5 +15,11 @@
         android:name="com.septian.filmapauiux.ui.FavouriteFragment"
         android:label="@string/title_tv_show"
         tools:layout="@layout/fragment_favourite" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.septian.filmapauiux.ui.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
 
 </navigation>

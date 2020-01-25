@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/container_detail_movie"
     android:background="@color/colorPrimaryDark"
-    tools:context=".ui.Detail.MovieDetail">
+    tools:context=".ui.detail.MovieDetailActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,6 +27,7 @@
 
         <ImageView
             android:id="@+id/imageView"
+            android:contentDescription="Background Gradasi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/transparent_gradient_bg"

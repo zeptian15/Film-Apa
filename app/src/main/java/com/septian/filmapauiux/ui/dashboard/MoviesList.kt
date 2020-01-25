@@ -1,4 +1,4 @@
-package com.septian.filmapauiux.ui.Dashboard
+package com.septian.filmapauiux.ui.dashboard
 
 
 import android.content.Intent
@@ -13,19 +13,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.septian.filmapauiux.DataViewModel
 import com.septian.filmapauiux.R
-import com.septian.filmapauiux.model.TvShow
-import com.septian.filmapauiux.ui.Detail.TvShowDetail
-import com.septian.rickymaulana.filmapa.adapter.TvShowRecyclerAdapter
-import kotlinx.android.synthetic.main.fragment_tvshow.*
+import com.septian.filmapauiux.model.Movie
+import com.septian.filmapauiux.ui.detail.MovieDetailActivity
+import com.septian.rickymaulana.filmapa.adapter.MovieRecyclerAdapter
+import kotlinx.android.synthetic.main.fragment_movies.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class TVShowList : Fragment() {
+class MoviesList : Fragment() {
     // Inisialisasi Variabel
-    private val list = ArrayList<TvShow>()
-    private lateinit var rvTv: RecyclerView
-    private lateinit var showRecyclerAdapter: TvShowRecyclerAdapter
+    private val list = ArrayList<Movie>()
+    private lateinit var rvMovie: RecyclerView
+    private lateinit var recyclerAdapter: MovieRecyclerAdapter
 
     private lateinit var dataViewModel: DataViewModel
 
@@ -34,18 +34,18 @@ class TVShowList : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tvshow, container, false)
+        return inflater.inflate(R.layout.fragment_movies, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        rvMovie = view.findViewById(R.id.rv_movie)
+        rvMovie.setHasFixedSize(true)
 
-        rvTv = view.findViewById(R.id.rv_tv)
-
-        showRecyclerAdapter = TvShowRecyclerAdapter()
-        showRecyclerAdapter.notifyDataSetChanged()
-        rvTv.layoutManager = LinearLayoutManager(context)
-        rvTv.adapter = showRecyclerAdapter
+        recyclerAdapter = MovieRecyclerAdapter()
+        recyclerAdapter.notifyDataSetChanged()
+        rvMovie.layoutManager = LinearLayoutManager(context)
+        rvMovie.adapter = recyclerAdapter
 
         // Inisialisasi DataViewModel
         dataViewModel = ViewModelProvider(
@@ -54,31 +54,28 @@ class TVShowList : Fragment() {
         ).get(DataViewModel::class.java)
 
         // Masukan data ke dalam RecyclerView
-        dataViewModel.setTvShows()
+        dataViewModel.setMovies()
         showLoading(true)
 
-        dataViewModel.getTvShows().observe(viewLifecycleOwner, Observer { tvShowItems ->
-            if (tvShowItems != null) {
-                showRecyclerAdapter.setData(tvShowItems)
-
+        dataViewModel.getMovies().observe(viewLifecycleOwner, Observer { movieItems ->
+            if (movieItems != null) {
+                recyclerAdapter.setData(movieItems)
                 showLoading(false)
             }
         })
-
-        showRecyclerAdapter.setOnItemClickCallback(object :
-            TvShowRecyclerAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: TvShow) {
+        recyclerAdapter.setOnItemClickCallback(object : MovieRecyclerAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Movie) {
                 moveToDetailActivity(data)
             }
         })
 
     }
 
-    // Pindah ke Activity Detail Tv Show
-    private fun moveToDetailActivity(tvShow: TvShow) {
-        val detailTvActivity = Intent(context, TvShowDetail::class.java)
-        detailTvActivity.putExtra(TvShowDetail.EXTRA_TV_SHOW, tvShow)
-        startActivity(detailTvActivity)
+    // Pindah ke Activity Detail Movie
+    private fun moveToDetailActivity(movie: Movie) {
+        val detailMovieActivity = Intent(context, MovieDetailActivity::class.java)
+        detailMovieActivity.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie)
+        startActivity(detailMovieActivity)
     }
 
     private fun showLoading(state: Boolean) {

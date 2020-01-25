@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.septian.filmapauiux.R
-import com.septian.filmapauiux.ui.Dashboard.MoviesList
-import com.septian.filmapauiux.ui.Dashboard.TVShowList
+import com.septian.filmapauiux.ui.dashboard.MoviesList
+import com.septian.filmapauiux.ui.dashboard.TVShowList
 
 class MainPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

@@ -1,4 +1,4 @@
-package com.septian.filmapauiux.ui.Favourite
+package com.septian.filmapauiux.ui.favourite
 
 
 import android.content.Intent
