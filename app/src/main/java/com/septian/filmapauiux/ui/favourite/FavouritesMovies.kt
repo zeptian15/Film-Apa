@@ -30,7 +30,7 @@ class FavouritesMovies : Fragment() {
 
     companion object {
         private const val EXTRA_STATE = "EXTRA_STATE"
-        private const val REQUEST_CODE = 100;
+        private const val REQUEST_CODE = 100
     }
 
     override fun onCreateView(
