@@ -1,9 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SearchFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SearchFragment"
+    android:background="#1F182A"
+    android:focusableInTouchMode="true">
 
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/title_search_movie"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
+        android:ems="10"
+        android:textColorHint="#B9B9B9"
+        android:paddingLeft="16dp"
+        android:textColor="#B9B9B9"
+        android:drawablePadding="16dp"
+        android:drawableLeft="@drawable/ic_search_24dp"
+        android:background="@drawable/bg_search"
+        app:layout_constraintBottom_toTopOf="@+id/tabs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#1F182A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_search"
+        app:tabSelectedTextColor="#BB64FF"
+        app:tabTextColor="@android:color/darker_gray" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tabs"
+        app:layout_constraintTop_toBottomOf="@id/tabs" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

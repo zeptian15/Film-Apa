@@ -18,5 +18,7 @@
     <string name="title_dashboard">Dasbor</string>
     <string name="title_favourites">Favorit</string>
     <string name="data_exist">Sudah menjadi favorit!</string>
+    <string name="title_search_movie">Cari Film</string>
+    <string name="title_search_tv">Cari Acara TV</string>
     <string name="title_search">Cari</string>
 </resources>

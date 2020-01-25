@@ -1,4 +1,4 @@
-package com.septian.filmapauiux.ui.dashboard
+package com.septian.filmapauiux.ui.search
 
 
 import android.content.Intent
@@ -8,25 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.septian.filmapauiux.DataViewModel
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.adapter.MovieRecyclerAdapter
 import com.septian.filmapauiux.model.Movie
 import com.septian.filmapauiux.ui.detail.MovieDetailActivity
-import kotlinx.android.synthetic.main.fragment_movies.*
+import kotlinx.android.synthetic.main.fragment_search_movies.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class MoviesList : Fragment() {
-    // Inisialisasi Variabel
-    private val list = ArrayList<Movie>()
+class SearchMovies : Fragment() {
     private lateinit var rvMovie: RecyclerView
     private lateinit var recyclerAdapter: MovieRecyclerAdapter
-
     private lateinit var dataViewModel: DataViewModel
 
     override fun onCreateView(
@@ -34,7 +32,7 @@ class MoviesList : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movies, container, false)
+        return inflater.inflate(R.layout.fragment_search_movies, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,16 +46,17 @@ class MoviesList : Fragment() {
         rvMovie.adapter = recyclerAdapter
 
         // Inisialisasi DataViewModel
-        dataViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(DataViewModel::class.java)
+        dataViewModel = ViewModelProviders.of(activity!!).get(DataViewModel::class.java)
 
-        // Masukan data ke dalam RecyclerView
-        dataViewModel.setMovies()
-        showLoading(true)
+        dataViewModel.titleMovie.observe(viewLifecycleOwner, Observer { moviesName ->
+            if (moviesName != null) {
+                Snackbar.make(rv_movie, "Hasil : $moviesName", Snackbar.LENGTH_SHORT).show()
+                dataViewModel.setSearchMovies(moviesName)
+                showLoading(true)
+            }
+        })
 
-        dataViewModel.getMovies().observe(viewLifecycleOwner, Observer { movieItems ->
+        dataViewModel.getSearchMovies().observe(viewLifecycleOwner, Observer { movieItems ->
             if (movieItems != null) {
                 recyclerAdapter.setData(movieItems)
                 showLoading(false)
@@ -85,5 +84,4 @@ class MoviesList : Fragment() {
             progressBar.visibility = View.GONE
         }
     }
-
 }

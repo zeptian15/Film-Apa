@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.septian.filmapauiux.DataViewModel
 import com.septian.filmapauiux.R
+import com.septian.filmapauiux.adapter.TvShowRecyclerAdapter
 import com.septian.filmapauiux.model.TvShow
 import com.septian.filmapauiux.ui.detail.TvShowDetailActivity
-import com.septian.rickymaulana.filmapa.adapter.TvShowRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 
 /**

@@ -1,4 +1,4 @@
-package com.septian.rickymaulana.filmapa.adapter
+package com.septian.filmapauiux.adapter
 
 import android.view.LayoutInflater
 import android.view.View

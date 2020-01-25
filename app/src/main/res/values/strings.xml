@@ -17,6 +17,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_favourites">Favourites</string>
     <string name="data_exist">Already a favorite!</string>
+    <string name="title_search_movie">Search Movies</string>
+    <string name="title_search_tv">Search TV Show</string>
     <string name="title_search">Search</string>
 
 
