@@ -19,6 +19,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <provider
+            android:name=".DataProvider"
+            android:authorities="com.septian.filmapauiux"
+            android:enabled="true"
+            android:exported="true"
+            android:readPermission="com.septian.filmapauiux.READ_DATABASE"
+            android:writePermission="com.septian.filmapauiux.WRITE_DATABASE"></provider>
 
         <activity android:name=".ui.favourite.FavouriteDetail" />
         <activity android:name=".ui.detail.TvShowDetailActivity" />

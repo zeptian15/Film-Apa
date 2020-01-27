@@ -1,7 +1,9 @@
 package com.septian.filmapauiux.ui.detail
 
 import android.content.ContentValues
+import android.database.Cursor
 import android.database.sqlite.SQLiteException
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.db.DataHelper
 import com.septian.filmapauiux.db.DatabaseContract
+import com.septian.filmapauiux.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.septian.filmapauiux.model.Movie
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
@@ -29,6 +32,7 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var poster: String
     private lateinit var background: String
     private lateinit var type: String
+    private lateinit var uriWithId: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +59,9 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         // Set data
         setData(movie)
+
+        // Gunakan Content Provider
+        uriWithId = Uri.parse("$CONTENT_URI/${movie.id}")
 
     }
 
@@ -83,7 +90,7 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkItem(): Boolean {
-        val cursor = favHelper.queryById(id)
+        val cursor = contentResolver?.query(uriWithId, null, null, null, null) as Cursor
         if (cursor.moveToFirst()) return false
         cursor.close()
         return true
@@ -101,7 +108,7 @@ class MovieDetailActivity : AppCompatActivity(), View.OnClickListener {
         values.put(DatabaseContract.NoteColumns.TYPE, type)
 
         try {
-            favHelper.insert(values)
+            contentResolver?.insert(CONTENT_URI, values)
             Snackbar.make(
                 container_detail_movie,
                 R.string.success,

@@ -2,6 +2,8 @@ package com.septian.filmapauiux.ui.favourite
 
 
 import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.adapter.FavouriteRecyclerAdapter
 import com.septian.filmapauiux.db.DataHelper
+import com.septian.filmapauiux.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.septian.filmapauiux.helper.MappingHelper
 import com.septian.filmapauiux.model.Favourite
 import kotlinx.android.synthetic.main.fragment_fav_tv_show.*
@@ -27,6 +30,7 @@ class FavouritesTvShow : Fragment() {
     // Inisialisasi FavHelper
     private lateinit var favHelper: DataHelper
     private lateinit var recyclerAdapter: FavouriteRecyclerAdapter
+    private lateinit var uriWithTvSHow: Uri
 
     companion object {
         private const val EXTRA_STATE = "EXTRA_STATE"
@@ -55,7 +59,7 @@ class FavouritesTvShow : Fragment() {
 
         if (savedInstanceState == null) {
             // proses ambil data
-            loadFavMoviesAsync()
+            loadFavTvShowAsync()
         } else {
             val list = savedInstanceState.getParcelableArrayList<Favourite>(EXTRA_STATE)
             if (list != null) {
@@ -69,6 +73,9 @@ class FavouritesTvShow : Fragment() {
                 moveToDetailActivity(data, position)
             }
         })
+
+        // Get All Tv Show
+        uriWithTvSHow = Uri.parse("${CONTENT_URI}/tv")
     }
 
     // Pindah ke Activity Detail Movie
@@ -92,11 +99,17 @@ class FavouritesTvShow : Fragment() {
         favHelper.close()
     }
 
-    private fun loadFavMoviesAsync() {
+    private fun loadFavTvShowAsync() {
         GlobalScope.launch(Dispatchers.Main) {
             progressBar.visibility = View.VISIBLE
             val defferedMovies = async(Dispatchers.IO) {
-                val cursor = favHelper.queryTv()
+                val cursor = activity?.contentResolver?.query(
+                    uriWithTvSHow,
+                    null,
+                    null,
+                    null,
+                    null
+                ) as Cursor
                 MappingHelper.mapCursorToArrayList(cursor)
             }
             progressBar.visibility = View.INVISIBLE

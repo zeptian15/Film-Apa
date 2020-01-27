@@ -2,6 +2,8 @@ package com.septian.filmapauiux.ui.favourite
 
 
 import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.adapter.FavouriteRecyclerAdapter
 import com.septian.filmapauiux.db.DataHelper
+import com.septian.filmapauiux.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.septian.filmapauiux.helper.MappingHelper
 import com.septian.filmapauiux.model.Favourite
 import kotlinx.android.synthetic.main.fragment_fav_movies.*
@@ -27,6 +30,7 @@ class FavouritesMovies : Fragment() {
     // Inisialisasi FavHelper
     private lateinit var favHelper: DataHelper
     private lateinit var recyclerAdapter: FavouriteRecyclerAdapter
+    private lateinit var uriWithMovie: Uri
 
     companion object {
         private const val EXTRA_STATE = "EXTRA_STATE"
@@ -70,6 +74,9 @@ class FavouritesMovies : Fragment() {
             }
         })
 
+        // Get All Movies
+        uriWithMovie = Uri.parse("$CONTENT_URI/movie")
+
     }
 
     // Pindah ke Activity Detail Movie
@@ -91,7 +98,8 @@ class FavouritesMovies : Fragment() {
     private fun loadFavMoviesAsync() {
         GlobalScope.launch(Dispatchers.Main) {
             val defferedMovies = async(Dispatchers.IO) {
-                val cursor = favHelper.queryMovies()
+                val cursor =
+                    activity?.contentResolver?.query(uriWithMovie, null, null, null, null) as Cursor
                 MappingHelper.mapCursorToArrayList(cursor)
             }
             val movies = defferedMovies.await()
