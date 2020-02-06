@@ -1,6 +1,7 @@
 package com.septian.filmapauiux.ui.favourite
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.adapter.FavouriteRecyclerAdapter
-import com.septian.filmapauiux.db.DataHelper
 import com.septian.filmapauiux.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.septian.filmapauiux.helper.MappingHelper
 import com.septian.filmapauiux.model.Favourite
@@ -27,8 +27,7 @@ import kotlinx.coroutines.launch
  * A simple [Fragment] subclass.
  */
 class FavouritesMovies : Fragment() {
-    // Inisialisasi FavHelper
-    private lateinit var favHelper: DataHelper
+    // Inisialisasi
     private lateinit var recyclerAdapter: FavouriteRecyclerAdapter
     private lateinit var uriWithMovie: Uri
 
@@ -47,9 +46,6 @@ class FavouritesMovies : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        favHelper = DataHelper.getInstance(view.context)
-        favHelper.open()
 
         recyclerAdapter = FavouriteRecyclerAdapter()
         recyclerAdapter.notifyDataSetChanged()
@@ -95,6 +91,7 @@ class FavouritesMovies : Fragment() {
         outState.putParcelableArrayList(EXTRA_STATE, recyclerAdapter.favList)
     }
 
+    @SuppressLint("Recycle")
     private fun loadFavMoviesAsync() {
         GlobalScope.launch(Dispatchers.Main) {
             val defferedMovies = async(Dispatchers.IO) {
@@ -103,7 +100,7 @@ class FavouritesMovies : Fragment() {
                 MappingHelper.mapCursorToArrayList(cursor)
             }
             val movies = defferedMovies.await()
-            if(movies.size > 0){
+            if (movies.size >= 0) {
                 recyclerAdapter.favList = movies
             } else {
                 recyclerAdapter.favList = ArrayList()
@@ -122,11 +119,6 @@ class FavouritesMovies : Fragment() {
                 Snackbar.make(rv_fav_movie, R.string.success_del, Snackbar.LENGTH_SHORT).show()
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        favHelper.close()
     }
 
 }

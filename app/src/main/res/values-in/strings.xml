@@ -21,4 +21,6 @@
     <string name="title_search_movie">Cari Film</string>
     <string name="title_search_tv">Cari Acara TV</string>
     <string name="title_search">Cari</string>
+    <string name="my_favourites">Favorit Saya</string>
+    <string name="empty_data">Belum ada favorit</string>
 </resources>

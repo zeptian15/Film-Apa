@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ethanhua.skeleton.Skeleton
+import com.ethanhua.skeleton.SkeletonScreen
 import com.google.android.material.snackbar.Snackbar
 import com.septian.filmapauiux.DataViewModel
 import com.septian.filmapauiux.R
@@ -26,6 +28,7 @@ class SearchTvShows : Fragment() {
     private lateinit var rvTvShow: RecyclerView
     private lateinit var recyclerAdapter: TvShowRecyclerAdapter
     private lateinit var dataViewModel: DataViewModel
+    private lateinit var skeletonSearchShow: SkeletonScreen
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,14 +55,15 @@ class SearchTvShows : Fragment() {
             if (tvShowName != null) {
                 Snackbar.make(rvTvShow, "Hasil : $tvShowName", Snackbar.LENGTH_SHORT).show()
                 dataViewModel.setSearchTvShows(tvShowName)
-                showLoading(true)
+                skeletonSearchShow =
+                    Skeleton.bind(rvTvShow).adapter(recyclerAdapter).load(R.layout.item_tv).show()
             }
         })
 
         dataViewModel.getSearchTvShows().observe(viewLifecycleOwner, Observer { tvItems ->
             if (tvItems != null) {
                 recyclerAdapter.setData(tvItems)
-                showLoading(false)
+                skeletonSearchShow.hide()
             }
         })
         recyclerAdapter.setOnItemClickCallback(object : TvShowRecyclerAdapter.OnItemClickCallback {

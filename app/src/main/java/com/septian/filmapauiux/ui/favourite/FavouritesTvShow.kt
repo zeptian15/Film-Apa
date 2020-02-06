@@ -1,6 +1,7 @@
 package com.septian.filmapauiux.ui.favourite
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.adapter.FavouriteRecyclerAdapter
-import com.septian.filmapauiux.db.DataHelper
 import com.septian.filmapauiux.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.septian.filmapauiux.helper.MappingHelper
 import com.septian.filmapauiux.model.Favourite
@@ -27,8 +27,7 @@ import kotlinx.coroutines.launch
  * A simple [Fragment] subclass.
  */
 class FavouritesTvShow : Fragment() {
-    // Inisialisasi FavHelper
-    private lateinit var favHelper: DataHelper
+    // Inisialisasi
     private lateinit var recyclerAdapter: FavouriteRecyclerAdapter
     private lateinit var uriWithTvSHow: Uri
 
@@ -47,9 +46,6 @@ class FavouritesTvShow : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        favHelper = DataHelper.getInstance(view.context)
-        favHelper.open()
 
         recyclerAdapter = FavouriteRecyclerAdapter()
         recyclerAdapter.notifyDataSetChanged()
@@ -75,7 +71,7 @@ class FavouritesTvShow : Fragment() {
         })
 
         // Get All Tv Show
-        uriWithTvSHow = Uri.parse("${CONTENT_URI}/tv")
+        uriWithTvSHow = Uri.parse("$CONTENT_URI/tv")
     }
 
     // Pindah ke Activity Detail Movie
@@ -94,11 +90,7 @@ class FavouritesTvShow : Fragment() {
         outState.putParcelableArrayList(EXTRA_STATE, recyclerAdapter.favList)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        favHelper.close()
-    }
-
+    @SuppressLint("Recycle")
     private fun loadFavTvShowAsync() {
         GlobalScope.launch(Dispatchers.Main) {
             progressBar.visibility = View.VISIBLE
@@ -114,7 +106,7 @@ class FavouritesTvShow : Fragment() {
             }
             progressBar.visibility = View.INVISIBLE
             val tv = defferedMovies.await()
-            if(tv.size > 0){
+            if (tv.size >= 0) {
                 recyclerAdapter.favList = tv
             } else {
                 recyclerAdapter.favList = ArrayList()

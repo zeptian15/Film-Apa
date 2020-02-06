@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ethanhua.skeleton.Skeleton
+import com.ethanhua.skeleton.SkeletonScreen
 import com.septian.filmapauiux.DataViewModel
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.adapter.TvShowRecyclerAdapter
@@ -28,6 +30,7 @@ class TVShowList : Fragment() {
     private lateinit var showRecyclerAdapter: TvShowRecyclerAdapter
 
     private lateinit var dataViewModel: DataViewModel
+    private lateinit var skeletonShowList: SkeletonScreen
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +50,9 @@ class TVShowList : Fragment() {
         rvTv.layoutManager = LinearLayoutManager(context)
         rvTv.adapter = showRecyclerAdapter
 
+        skeletonShowList =
+            Skeleton.bind(rvTv).adapter(showRecyclerAdapter).load(R.layout.item_tv).show()
+
         // Inisialisasi DataViewModel
         dataViewModel = ViewModelProvider(
             this,
@@ -55,13 +61,11 @@ class TVShowList : Fragment() {
 
         // Masukan data ke dalam RecyclerView
         dataViewModel.setTvShows()
-        showLoading(true)
 
         dataViewModel.getTvShows().observe(viewLifecycleOwner, Observer { tvShowItems ->
             if (tvShowItems != null) {
                 showRecyclerAdapter.setData(tvShowItems)
-
-                showLoading(false)
+                skeletonShowList.hide()
             }
         })
 

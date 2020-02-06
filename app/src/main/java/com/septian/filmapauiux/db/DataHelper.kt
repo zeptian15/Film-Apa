@@ -76,7 +76,7 @@ class DataHelper(context: Context) {
             null,
             null,
             null,
-            "$ID ASC",
+            null,
             null)
     }
 
@@ -88,7 +88,7 @@ class DataHelper(context: Context) {
             null,
             null,
             null,
-            "$ID ASC",
+            null,
             null)
     }
 

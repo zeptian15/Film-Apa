@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ethanhua.skeleton.Skeleton
+import com.ethanhua.skeleton.SkeletonScreen
 import com.google.android.material.snackbar.Snackbar
 import com.septian.filmapauiux.DataViewModel
 import com.septian.filmapauiux.R
@@ -26,6 +28,7 @@ class SearchMovies : Fragment() {
     private lateinit var rvMovie: RecyclerView
     private lateinit var recyclerAdapter: MovieRecyclerAdapter
     private lateinit var dataViewModel: DataViewModel
+    private lateinit var skeletonSearchMovies: SkeletonScreen
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,14 +55,15 @@ class SearchMovies : Fragment() {
             if (moviesName != null) {
                 Snackbar.make(rv_movie, "Hasil : $moviesName", Snackbar.LENGTH_SHORT).show()
                 dataViewModel.setSearchMovies(moviesName)
-                showLoading(true)
+                skeletonSearchMovies =
+                    Skeleton.bind(rvMovie).adapter(recyclerAdapter).load(R.layout.item_movie).show()
             }
         })
 
         dataViewModel.getSearchMovies().observe(viewLifecycleOwner, Observer { movieItems ->
             if (movieItems != null) {
                 recyclerAdapter.setData(movieItems)
-                showLoading(false)
+                skeletonSearchMovies.hide()
             }
         })
         recyclerAdapter.setOnItemClickCallback(object : MovieRecyclerAdapter.OnItemClickCallback {

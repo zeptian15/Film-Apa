@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ethanhua.skeleton.Skeleton
+import com.ethanhua.skeleton.SkeletonScreen
 import com.septian.filmapauiux.DataViewModel
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.adapter.MovieRecyclerAdapter
@@ -28,6 +30,7 @@ class MoviesList : Fragment() {
     private lateinit var recyclerAdapter: MovieRecyclerAdapter
 
     private lateinit var dataViewModel: DataViewModel
+    private lateinit var skeletonMoviesList: SkeletonScreen;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +50,9 @@ class MoviesList : Fragment() {
         rvMovie.layoutManager = LinearLayoutManager(context)
         rvMovie.adapter = recyclerAdapter
 
+        skeletonMoviesList =
+            Skeleton.bind(rvMovie).adapter(recyclerAdapter).load(R.layout.item_movie).show()
+
         // Inisialisasi DataViewModel
         dataViewModel = ViewModelProvider(
             this,
@@ -55,12 +61,11 @@ class MoviesList : Fragment() {
 
         // Masukan data ke dalam RecyclerView
         dataViewModel.setMovies()
-        showLoading(true)
 
         dataViewModel.getMovies().observe(viewLifecycleOwner, Observer { movieItems ->
             if (movieItems != null) {
                 recyclerAdapter.setData(movieItems)
-                showLoading(false)
+                skeletonMoviesList.hide();
             }
         })
         recyclerAdapter.setOnItemClickCallback(object : MovieRecyclerAdapter.OnItemClickCallback {

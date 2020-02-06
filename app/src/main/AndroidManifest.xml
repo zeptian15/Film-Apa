@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.septian.filmapauiux">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <permission
@@ -19,13 +20,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <receiver android:name=".widgets.FavouritesWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_widget_info" />
+        </receiver>
+
         <provider
             android:name=".DataProvider"
             android:authorities="com.septian.filmapauiux"
             android:enabled="true"
             android:exported="true"
             android:readPermission="com.septian.filmapauiux.READ_DATABASE"
-            android:writePermission="com.septian.filmapauiux.WRITE_DATABASE"></provider>
+            android:writePermission="com.septian.filmapauiux.WRITE_DATABASE" />
 
         <activity android:name=".ui.favourite.FavouriteDetail" />
         <activity android:name=".ui.detail.TvShowDetailActivity" />
@@ -40,6 +51,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".widgets.FavouritesWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

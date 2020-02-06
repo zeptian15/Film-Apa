@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.septian.filmapauiux.R
-import com.septian.filmapauiux.db.DataHelper
 import com.septian.filmapauiux.db.DatabaseContract
 import com.septian.filmapauiux.db.DatabaseContract.NoteColumns.Companion.CONTENT_URI
 import com.septian.filmapauiux.model.TvShow
@@ -23,7 +22,6 @@ class TvShowDetailActivity : AppCompatActivity(), View.OnClickListener {
         const val EXTRA_TV_SHOW = "extra_tv_show"
     }
 
-    private lateinit var favHelper: DataHelper
     private lateinit var id: String
     private lateinit var title: String
     private lateinit var description: String
@@ -37,10 +35,6 @@ class TvShowDetailActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tv_detail)
-
-        // Inisialisasi Note Helper
-        favHelper = DataHelper.getInstance(applicationContext)
-        favHelper.open()
 
         // Ambil data
         val tvShow = intent.getParcelableExtra(EXTRA_TV_SHOW) as TvShow
@@ -61,7 +55,7 @@ class TvShowDetailActivity : AppCompatActivity(), View.OnClickListener {
         // Set data
         setData(tvShow)
 
-        uriWithId = Uri.parse("$CONTENT_URI/$tvShow.id")
+        uriWithId = Uri.parse("$CONTENT_URI/${tvShow.id}")
     }
 
     override fun onClick(v: View) {
@@ -83,15 +77,11 @@ class TvShowDetailActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        favHelper.close()
-    }
-
     private fun checkItem(): Boolean {
         val cursor = contentResolver?.query(uriWithId, null, null, null, null) as Cursor
-        if (cursor.moveToFirst()) return false
-        cursor.close()
+        if (cursor != null) {
+            if (cursor.moveToFirst()) return false
+        }
         return true
     }
 

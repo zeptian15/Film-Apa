@@ -20,6 +20,10 @@
     <string name="title_search_movie">Search Movies</string>
     <string name="title_search_tv">Search TV Show</string>
     <string name="title_search">Search</string>
+    <string name="appwidget_text" translatable="false">EXAMPLE</string>
+    <string name="add_widget" translatable="false">Add widget</string>
+    <string name="my_favourites">My Favourites</string>
+    <string name="empty_data">There are no favorites yet</string>
 
 
 </resources>
