@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.AsyncTask
+import android.os.Binder
 import android.os.Build
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
@@ -20,6 +21,7 @@ import com.septian.filmapauiux.model.Favourite
 import java.net.URL
 import java.net.UnknownHostException
 
+
 internal class FavouritesViewsFactory(private val context: Context) :
     RemoteViewsService.RemoteViewsFactory {
     private var bitmapImage: Bitmap? = null
@@ -30,7 +32,10 @@ internal class FavouritesViewsFactory(private val context: Context) :
 
     override fun getItemId(position: Int): Long = 0
 
-    override fun onDataSetChanged() {}
+    override fun onDataSetChanged() {
+        val identityToken = Binder.clearCallingIdentity()
+        Binder.restoreCallingIdentity(identityToken)
+    }
 
     override fun hasStableIds(): Boolean = false
 
@@ -40,12 +45,12 @@ internal class FavouritesViewsFactory(private val context: Context) :
             context.packageName,
             R.layout.widget_item
         )
-        val widgetItems = mapCursorToArrayList()
         val baseUrl = "https://image.tmdb.org/t/p/w500"
         val network =
             ImageFromUrl(
                 context
             )
+        var widgetItems = mapCursorToArrayList()
         bitmapImage = network.getBitmap(baseUrl + widgetItems[position].poster)
         remoteViews.setImageViewBitmap(R.id.imageView, bitmapImage)
         val fillIntent = Intent()
@@ -69,7 +74,6 @@ internal class FavouritesViewsFactory(private val context: Context) :
         favHelper.open()
         val cursor = favHelper.queryAll()
         val favouritesList = ArrayList<Favourite>()
-        cursor.moveToFirst()
         while (cursor.moveToNext()) {
             val id =
                 cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.NoteColumns.ID))
@@ -107,7 +111,6 @@ internal class FavouritesViewsFactory(private val context: Context) :
                 )
             )
         }
-
         return favouritesList
     }
 
