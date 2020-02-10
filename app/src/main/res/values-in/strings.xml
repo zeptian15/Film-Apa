@@ -23,4 +23,10 @@
     <string name="title_search">Cari</string>
     <string name="my_favourites">Favorit Saya</string>
     <string name="empty_data">Belum ada favorit</string>
+    <string name="title_activity_settings">Pengaturan</string>
+    <string name="title_daily_reminder">Selamat pagi!</string>
+    <string name="text_daily_reminder">Yuk cek aplikasinya sekarang juga!</string>
+    <string name="title_new">Baru!</string>
+    <string name="title_new_movies">Film Baru!</string>
+    <string name="title_from_tmdb">Dari TMDB</string>
 </resources>

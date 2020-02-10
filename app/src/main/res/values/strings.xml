@@ -25,6 +25,12 @@
     <string name="my_favourites">My Favourites</string>
     <string name="empty_data">There are no favorites yet</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="text_daily_reminder">Check the app now!</string>
+    <string name="title_daily_reminder">Good Morning!</string>
+    <string name="title_new">New!</string>
+    <string name="title_new_movies">New Movies!</string>
+    <string name="title_from_tmdb">From TMDB</string>
+
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

@@ -7,9 +7,18 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.septian.filmapauiux.R
+import com.septian.filmapauiux.ReminderReceiver
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        const val TYPE_REMINDER = "daily_reminder"
+        const val TYPE_RELEASE = "release_reminder"
+    }
+
+    private lateinit var reminderReceiver: ReminderReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,17 +31,36 @@ class MainActivity : AppCompatActivity() {
         val isRemind = prefs.getBoolean("daily_reminder", false)
         val isRelease = prefs.getBoolean("release_today_reminder", false)
 
-        if (isRemind) {
-            Log.d("Sapa", "Hai")
+        reminderReceiver = ReminderReceiver()
+
+        if (reminderReceiver.isReminderActivated(this, TYPE_REMINDER)) {
+            Log.d("StatusAlarm", "Activated")
         } else {
-            Log.d("Sapa", " Tidak Hai")
+            Log.d("StatusAlarm", "Not Activated")
         }
 
-        if (isRelease) {
-            Log.d("Sapa", "Hai Release")
+        if (reminderReceiver.isReminderActivated(this, TYPE_RELEASE)) {
+            Log.d("StatusAlarmRe", "Activated")
         } else {
-            Log.d("Sapa", " Tidak Hai Release")
+            Log.d("StatusAlarmRe", "Not Activated")
         }
+
+//        if (isRemind){
+//            Log.d("StatusAlarmFromShared", "Activated")
+//            reminderReceiver.activateDailyReminder(this, true)
+//        } else {
+//            Log.d("StatusAlarmFromShared", "Not Activated")
+//            reminderReceiver.activateDailyReminder(this, false)
+//        }
+//
+//        if (isRelease){
+//            Log.d("StatusAlarmFromShared", "Activated")
+//            reminderReceiver.activateReleaseToday(this, true)
+//        } else {
+//            Log.d("StatusAlarmFromShared", "Not Activated")
+//            reminderReceiver.activateReleaseToday(this, false)
+//        }
+
     }
 
 

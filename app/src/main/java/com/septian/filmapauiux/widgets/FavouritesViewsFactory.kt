@@ -1,6 +1,5 @@
 package com.septian.filmapauiux.widgets
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -10,10 +9,12 @@ import android.net.NetworkCapabilities
 import android.os.AsyncTask
 import android.os.Binder
 import android.os.Build
+import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import com.bumptech.glide.Glide
 import com.septian.filmapauiux.R
 import com.septian.filmapauiux.db.DataHelper
 import com.septian.filmapauiux.db.DatabaseContract
@@ -46,13 +47,18 @@ internal class FavouritesViewsFactory(private val context: Context) :
             R.layout.widget_item
         )
         val baseUrl = "https://image.tmdb.org/t/p/w500"
-        val network =
-            ImageFromUrl(
-                context
-            )
         var widgetItems = mapCursorToArrayList()
-        bitmapImage = network.getBitmap(baseUrl + widgetItems[position].poster)
-        remoteViews.setImageViewBitmap(R.id.imageView, bitmapImage)
+        try {
+            val bitmap: Bitmap = Glide.with(context)
+                .asBitmap()
+                .load(baseUrl + widgetItems[position].poster)
+                .submit(512, 512)
+                .get()
+            remoteViews.setImageViewBitmap(R.id.imageView, bitmap)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("Opps", "Ada masalah nih")
+        }
         val fillIntent = Intent()
         val extras = bundleOf(
             FavouritesWidget.EXTRA_ITEM to position,
@@ -115,8 +121,6 @@ internal class FavouritesViewsFactory(private val context: Context) :
     }
 
     class ImageFromUrl(private val context: Context) : AsyncTask<URL, Nothing, Bitmap>() {
-        @TargetApi(Build.VERSION_CODES.M)
-        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         private fun isConnected(context: Context): Boolean {
             var result = false
             val connManager =
@@ -134,8 +138,6 @@ internal class FavouritesViewsFactory(private val context: Context) :
             return result
         }
 
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         override fun doInBackground(vararg params: URL?): Bitmap {
             val bitmap: Bitmap?
             val networkURL = params[0]
@@ -153,14 +155,12 @@ internal class FavouritesViewsFactory(private val context: Context) :
             } else {
                 BitmapFactory.decodeResource(
                     context.resources,
-                    R.drawable.transparent_gradient_bg
+                    R.drawable.ic_dashboard_24dp
                 )
             }
             return bitmap
         }
 
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         fun getBitmap(url: String): Bitmap {
             return doInBackground(URL(url))
         }
